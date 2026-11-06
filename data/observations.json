@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "eventId": "ci38457511",
+  "source": "https://scedc-pds.s3.us-west-2.amazonaws.com/event_phases/2019/2019_187/38457511.phase",
+  "sourceCitation": "Southern California Earthquake Data Center (SCEDC), doi:10.7909/C3WD3xH1",
+  "phaseOriginUTC": "2019-07-06T03:19:53.040000Z",
+  "referenceOriginUTC": "2019-07-06T03:19:53Z",
+  "originOffsetSeconds": 0.04,
+  "selection": "Earliest positive P and S pick per matching CI station; 0-300 s; adjusted to the USGS reference origin",
+  "observations": [
+    {
+      "id": "CI.CCC",
+      "p": 6.422,
+      "s": 12.509,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.CLC",
+      "p": 0.668,
+      "s": 2.559,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.DAW",
+      "p": 9.237,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.LRL",
+      "p": 5.598,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.MPM",
+      "p": 5.703,
+      "s": 9.911,
+      "pChannel": "HHZ",
+      "sChannel": "HNE"
+    },
+    {
+      "id": "CI.SLA",
+      "p": 5.538,
+      "s": 11.303,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.SRT",
+      "p": 3.277,
+      "s": 6.512,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.TOW2",
+      "p": 3.128,
+      "s": 7.036,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WBM",
+      "p": 5.928,
+      "s": 10.824,
+      "pChannel": "HHZ",
+      "sChannel": "HNE"
+    },
+    {
+      "id": "CI.WBS",
+      "p": 9.462,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.WCS2",
+      "p": 5.658,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.WMF",
+      "p": 7.83,
+      "s": 14.822,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WOR",
+      "p": 9.926,
+      "s": 17.101,
+      "pChannel": "HHZ",
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WRC2",
+      "p": 3.547,
+      "s": 6.871,
+      "pChannel": "HHZ",
+      "sChannel": "HNE"
+    }
+  ]
+}

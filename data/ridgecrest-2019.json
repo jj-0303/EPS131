@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "event": {
+    "id": "ci38457511",
+    "title": "2019 Ridgecrest Earthquake Sequence",
+    "magnitude": 7.1,
+    "magnitudeType": "Mw",
+    "originUTC": "2019-07-06T03:19:53Z",
+    "latitude": 35.77,
+    "longitude": -117.599,
+    "depthKm": 8.0,
+    "source": "https://earthquake.usgs.gov/earthquakes/eventpage/ci38457511/origin/magnitude",
+    "precisionNote": "USGS rounded preferred reviewed origin; this is a point-source idealization of a finite-rupture M7.1 earthquake."
+  },
+  "stations": [
+    {"id":"CI.CCC","code":"CCC","latitude":35.52495,"longitude":-117.3645},
+    {"id":"CI.CLC","code":"CLC","latitude":35.81574,"longitude":-117.5975},
+    {"id":"CI.DAW","code":"DAW","latitude":36.27148,"longitude":-117.5921},
+    {"id":"CI.JRC2","code":"JRC2","latitude":35.98249,"longitude":-117.8089},
+    {"id":"CI.LRL","code":"LRL","latitude":35.47954,"longitude":-117.6821},
+    {"id":"CI.MPM","code":"MPM","latitude":36.05799,"longitude":-117.4890},
+    {"id":"CI.SLA","code":"SLA","latitude":35.89095,"longitude":-117.2833},
+    {"id":"CI.SRT","code":"SRT","latitude":35.69235,"longitude":-117.7505},
+    {"id":"CI.TOW2","code":"TOW2","latitude":35.80856,"longitude":-117.7649},
+    {"id":"CI.WBM","code":"WBM","latitude":35.60839,"longitude":-117.8905},
+    {"id":"CI.WBS","code":"WBS","latitude":35.53664,"longitude":-118.1404},
+    {"id":"CI.WCS2","code":"WCS2","latitude":36.02521,"longitude":-117.7653},
+    {"id":"CI.WMF","code":"WMF","latitude":36.11758,"longitude":-117.8549},
+    {"id":"CI.WOR","code":"WOR","latitude":35.69563,"longitude":-118.2425},
+    {"id":"CI.WRC2","code":"WRC2","latitude":35.94790,"longitude":-117.6504}
+  ],
+  "stationSource": {
+    "publisher": "Northern California Earthquake Data Center (NCEDC)",
+    "url": "https://ncedc.org/ftp/outgoing/taira/RC/RC_seismicity_map.html",
+    "stationFile": "https://ncedc.org/ftp/outgoing/taira/RC/ci_bb_sta.txt",
+    "description": "15 CI broadband sites within about 100 km used in a Ridgecrest eGF mapping study; real coordinates, not an exhaustive 2019 ShakeAlert inventory.",
+    "operationalCaveat": "Presence in this research subset does not establish real-time status, actual 2019 ShakeAlert participation, station latency or recorded phase picks."
+  },
+  "cities": [
+    {"id":"ridgecrest","name":"Ridgecrest","latitude":35.6225,"longitude":-117.6709},
+    {"id":"mojave","name":"Mojave","latitude":35.0525,"longitude":-118.1739},
+    {"id":"lancaster","name":"Lancaster","latitude":34.6868,"longitude":-118.1542},
+    {"id":"bakersfield","name":"Bakersfield","latitude":35.3733,"longitude":-119.0187},
+    {"id":"barstow","name":"Barstow","latitude":34.8958,"longitude":-117.0173},
+    {"id":"losangeles","name":"Los Angeles","latitude":34.0522,"longitude":-118.2437}
+  ],
+  "citySourceNote": "Approximate geographic city-center coordinates, not census population-weighted centroids; informational markers only.",
+  "model": {
+    "title": "Point-source straight-ray constant-velocity teaching baseline",
+    "vpKmS": 6.0,
+    "vsKmS": 3.5,
+    "velocitySource": "Chosen illustrative model parameters, not measured local 3D velocities",
+    "triggersRequired": 4,
+    "detectionDelayS": 0.8,
+    "networkDelayS": 1.0,
+    "processingDelayS": 1.2,
+    "deliveryDelayS": 3.0,
+    "latencySource": "Illustrative scenario settings, not historical ShakeAlert timings",
+    "durationS": 120
+  }
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#087f91">
+<title>EEW Lab</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/aleks-controls.css">
+<link rel="stylesheet" href="./css/heatmap.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="./">EEW Lab</a>
+    <div class="global-controls">
+      <label class="global-field" for="event-select"><span>Event</span><select id="event-select"><option value="ci38457511">Mw 7.1 · Jul 6</option><option value="ci38443183">Mw 6.4 · Jul 4</option></select></label>
+      <label class="global-field" for="model-select"><span>Model</span><select id="model-select"><option value="constant">Constant velocity</option><option value="1d" disabled>iasp91 · 1D</option><option value="3d" disabled>Tomography · 3D</option></select></label>
+      <label class="global-field map-field" for="base-select"><span>Map</span><select id="base-select"><option value="satellite">Satellite</option><option value="street">Street</option><option value="grid">Grid</option></select></label>
+      <button type="button" class="toolbar-button" id="export-results">Export CSV</button>
+      <button type="button" class="toolbar-button" id="reset-all">Reset</button>
+      <a class="toolbar-button source-link" href="https://github.com/CSFS64/EPS131" target="_blank" rel="noopener">Source</a>
+    </div>
+  </header>
+  <div class="main-grid">
+    <main class="map-workspace">
+      <div class="map-stage">
+        <canvas id="map" aria-label="Interactive earthquake map"></canvas>
+        <div class="map-zoom">
+          <button type="button" id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+          <button type="button" id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>
+          <button type="button" id="recenter" title="Recenter" aria-label="Recenter">⌖</button>
+        </div>
+        <div class="map-legend"><span><i class="line-swatch p"></i>P</span><span><i class="line-swatch s"></i>S</span><span><i class="station-swatch"></i>Station</span></div>
+        <div class="map-importance-key" id="map-importance-key" hidden><span>Station impact</span><i class="impact-swatch zero"></i><i class="impact-swatch low"></i><i class="impact-swatch medium"></i><i class="impact-swatch high"></i><i class="impact-swatch highest"></i><i class="impact-swatch lost" title="No alert"></i></div>
+        <div class="candidate-pointer" id="candidate-pointer" hidden></div>
+        <div class="map-candidate-key" id="map-candidate-key" hidden><span id="candidate-scale-title">Mean trigger margin</span><div class="candidate-colorbar margin" id="candidate-colorbar"></div><div class="candidate-scale"><span id="candidate-scale-min">0 s</span><span id="candidate-scale-mid">0 s</span><span id="candidate-scale-max">0.00 s</span></div></div>
+        <div class="map-attribution" id="map-attribution">Imagery © Esri, Maxar, Earthstar Geographics, GIS User Community</div>
+      </div>
+      <div class="map-layers">
+        <label class="layer-control"><input id="toggle-p" type="checkbox" checked><span>P wave</span></label>
+        <label class="layer-control"><input id="toggle-s" type="checkbox" checked><span>S wave</span></label>
+        <label class="layer-control"><input id="toggle-stations" type="checkbox" checked><span>Stations</span></label>
+        <div class="simulated-station-tools" role="group" aria-label="Simulated station">
+          <span class="simulated-station-label" id="manual-station-info" role="status" aria-live="polite">Right-click map to add a station</span>
+          <button type="button" class="minor-button" id="manual-station-focus" disabled>Focus</button>
+          <button type="button" class="minor-button" id="manual-station-remove" disabled>Remove</button>
+        </div>
+      </div>
+      <div class="selection-strip">
+        <div class="selection-identity"><strong id="selected-name">Ridgecrest</strong><span id="selected-distance"></span></div>
+        <div class="selection-metric"><span id="lead-label">S-wave lead</span><strong id="lead-value">—</strong></div>
+      </div>
+      <div class="playback">
+        <div class="play-buttons"><button class="icon-button" id="play" aria-label="Play" aria-pressed="false" title="Play">▶</button><button class="icon-button" id="restart" aria-label="Restart" title="Restart">↺</button></div>
+        <output class="timer" id="time-readout">00:00.0</output>
+        <div class="timeline"><input id="scrubber" type="range" min="0" max="120" step="0.1" value="0" aria-label="Simulation time"><div class="timeline-ends"><span>0 s</span><span id="duration-readout">120 s</span></div></div>
+        <label class="speed-box" for="speed">Speed<select id="speed"><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></label>
+      </div>
+      <div class="map-foot"><a href="./docs/methodology.md" target="_blank" rel="noopener">Methods</a><span id="load-state" role="status">Loading</span></div>
+    </main>
+    <aside class="research-workspace" aria-label="Analysis">
+      <div class="research-scroll">
+        <details class="research-section" id="section-models" open>
+          <summary><span>Model accuracy</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="section-body">
+            <div class="result-row"><div><span>P MAE</span><strong id="p-mae">—</strong></div><div><span>S MAE</span><strong id="s-mae">—</strong></div></div>
+            <div class="list-header"><span>Model</span><span>P MAE</span><span>S MAE</span></div>
+            <div id="comparison-list" class="comparison-list"></div>
+            <div id="velocity-fields" class="velocity-fields">
+              <div class="parameter"><div class="parameter-head"><label for="vp">P velocity</label><output id="vp-out">6.0 km/s</output></div><input id="vp" type="range" min="4.5" max="7.5" step="0.1" value="6"></div>
+              <div class="parameter"><div class="parameter-head"><label for="vs">S velocity</label><output id="vs-out">3.5 km/s</output></div><input id="vs" type="range" min="2.5" max="4.5" step="0.1" value="3.5"></div>
+              <button type="button" class="minor-button" id="reset-velocities">Reset velocities</button>
+            </div>
+          </div>
+        </details>
+        <details class="research-section" id="section-timing" open>
+          <summary><span>Alert timing</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="section-body">
+            <div class="result-row"><div><span>Issued</span><strong id="issue-main">—</strong></div><div><span>Delivered</span><strong id="delivered-main">—</strong></div></div>
+            <div id="timing-strip" class="timing-strip" aria-label="Alert timing stages"></div>
+            <div id="timing-breakdown" class="timing-breakdown"></div>
+            <div class="parameter"><div class="parameter-head"><label for="trigger-count">Required stations</label><output id="trigger-count-out">4</output></div><input id="trigger-count" type="range" min="1" max="15" step="1" value="4"></div>
+            <div class="parameter"><div class="parameter-head"><label for="detect-delay">Detection</label><output id="detect-delay-out">0.8 s</output></div><input id="detect-delay" type="range" min="0" max="6" step="0.2" value="0.8"></div>
+            <div class="parameter"><div class="parameter-head"><label for="network-delay">Telemetry</label><output id="network-delay-out">1.0 s</output></div><input id="network-delay" type="range" min="0" max="12" step="0.2" value="1"></div>
+            <div class="parameter"><div class="parameter-head"><label for="process-delay">Processing</label><output id="process-delay-out">1.2 s</output></div><input id="process-delay" type="range" min="0" max="10" step="0.2" value="1.2"></div>
+            <div class="parameter"><div class="parameter-head"><label for="delivery-delay">Delivery</label><output id="delivery-delay-out">3.0 s</output></div><input id="delivery-delay" type="range" min="0" max="20" step="0.2" value="3"></div>
+            <button type="button" id="reset-latency" class="minor-button">Reset latency</button>
+            <div class="list-subhead">City lead time</div><div id="city-list" class="city-list"></div>
+          </div>
+        </details>
+        <details class="research-section" id="section-stations">
+          <summary><span>Stations</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="section-body">
+            <div class="section-actions"><button type="button" id="enable-all" class="minor-button">Enable all</button><button type="button" id="disable-all" class="minor-button">Disable all</button><span id="station-count" class="list-count">15 / 15</span></div>
+            <div class="list-subhead impact-title"><span>Candidate station map</span><span class="impact-actions"><button type="button" class="minor-button" id="candidate-focus">Focus</button><button type="button" class="minor-button" id="candidate-export">CSV</button><button type="button" class="minor-button impact-map-switch" id="candidate-map-toggle" aria-pressed="true">Overlay on</button></span></div>
+            <div class="candidate-controls">
+              <label class="mini-field" for="candidate-source-mode"><span id="candidate-source-label">Current event</span><select id="candidate-source-mode"><option value="event">Current event</option><option value="manual">Manual source</option></select></label>
+              <label class="mini-field" for="candidate-analysis"><span>Analysis</span><select id="candidate-analysis"><option value="regional" selected>Regional scenarios</option><option value="single">Single source</option></select></label>
+              <label class="mini-field" id="candidate-radius-field" for="candidate-radius"><span>Radius</span><select id="candidate-radius"><option value="20">20 km</option><option value="35" selected>35 km</option><option value="50">50 km</option></select></label>
+              <label class="mini-field" for="candidate-grid"><span>Grid</span><select id="candidate-grid"><option value="coarse">Coarse</option><option value="medium" selected>Medium</option><option value="fine">Fine</option></select></label>
+              <label class="mini-field" for="candidate-metric"><span>Metric</span><select id="candidate-metric"><option value="margin" selected>Trigger margin</option><option value="gain">Alert gain</option></select></label>
+              <label class="mini-field" for="candidate-display"><span>Display</span><select id="candidate-display"><option value="smooth" selected>Smooth</option><option value="cells">Cells</option></select></label>
+              <button type="button" id="candidate-use-center" class="minor-button">Use map center</button>
+            </div>
+            <div class="candidate-manual-fields" id="candidate-manual-fields" hidden>
+              <label class="mini-field" for="candidate-lat"><span>Lat</span><input id="candidate-lat" type="number" step="0.001"></label>
+              <label class="mini-field" for="candidate-lon"><span>Lon</span><input id="candidate-lon" type="number" step="0.001"></label>
+              <label class="mini-field" for="candidate-depth"><span>Depth km</span><input id="candidate-depth" type="number" min="0" max="50" step="0.1"></label>
+            </div>
+            <div class="impact-caption" id="candidate-status">No grid</div>
+            <div id="candidate-top-list" class="candidate-top-list"></div>
+            <div class="candidate-caption" id="candidate-description">Mean gain across 21 deterministic source scenarios · Not observed earthquake probabilities</div>
+            <div class="list-subhead impact-title"><span>Station importance</span><span class="impact-actions"><button type="button" class="minor-button" id="export-impact-png" title="Save full station importance heatmap as PNG">PNG</button><button type="button" class="minor-button impact-map-switch" id="impact-map-toggle" aria-pressed="false">Map colors</button></span></div>
+            <div class="impact-caption">Alert delay (s) if a station is disabled · k = 1–15 (16 with NEW1)</div>
+            <div id="station-importance" class="impact-matrix" role="region" tabindex="0" aria-label="Station importance heatmap"></div>
+            <div class="impact-legend"><span><i class="impact-swatch zero"></i>0</span><span><i class="impact-swatch low"></i>&lt;0.5</span><span><i class="impact-swatch medium"></i>0.5–1.5</span><span><i class="impact-swatch high"></i>1.5–3</span><span><i class="impact-swatch highest"></i>3+</span><span><i class="impact-swatch lost"></i>No alert</span></div>
+            <div class="list-subhead">Station arrivals</div>
+            <div id="station-list" class="station-list"></div>
+          </div>
+        </details>
+        <details class="research-section" id="section-observed">
+          <summary><span>Observed residuals</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="section-body">
+            <div id="validation-status" class="data-status">Loading</div>
+            <div class="result-row"><div><span>P bias</span><strong id="p-bias">—</strong></div><div><span>S bias</span><strong id="s-bias">—</strong></div></div>
+            <div id="residual-chart" class="residual-chart"></div>
+            <div class="chart-foot" id="residual-summary"></div>
+            <div class="list-subhead">Picks <span id="pick-count">0</span></div>
+            <div class="data-table-scroll"><table class="compact-table" aria-label="Arrival residuals"><thead><tr><th>Station</th><th>Phase</th><th>Residual</th></tr></thead><tbody id="pick-rows"><tr><td colspan="3">No data</td></tr></tbody></table></div>
+            <div class="section-actions import-row"><button type="button" id="phase-file-trigger" class="minor-button">Import picks</button><input id="phase-file" type="file" accept=".phase,.txt,.json,text/plain,application/json" hidden><span class="file-name" id="import-state"></span><a class="minor-button" href="https://scedc.caltech.edu/data/cloud.html" target="_blank" rel="noopener">SCEDC</a></div>
+          </div>
+        </details>
+      </div>
+    </aside>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

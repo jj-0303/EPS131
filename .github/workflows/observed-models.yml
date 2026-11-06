@@ -1,0 +1,32 @@
+name: Observed events and 1D travel times
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'pipeline/fetch_events_phases.py'
+      - 'pipeline/prepare_events.py'
+      - 'pipeline/build_1d.py'
+      - 'data/events.json'
+      - '.github/workflows/observed-models.yml'
+permissions:
+  contents: write
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check setuptools==80.9.0 obspy==1.4.2
+      - run: python pipeline/fetch_events_phases.py
+      - run: python pipeline/build_1d.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ridgecrest-observed-1d
+          path: |
+            data/models-1d.json
+            data/observations/ci38457511.json
+            data/observations/ci38443183.json
+          retention-days: 30

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 3,
+  "eventId": "ci38457511",
+  "source": "https://scedc-pds.s3.us-west-2.amazonaws.com/event_phases/2019/2019_187/38457511.phase",
+  "phaseOriginUTC": "2019-07-06T03:19:53.040000Z",
+  "referenceOriginUTC": "2019-07-06T03:19:53Z",
+  "originOffsetSeconds": 0.04,
+  "observations": [
+    {
+      "id": "CI.CCC",
+      "p": 6.422,
+      "pChannel": "HHZ",
+      "s": 12.509,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.CLC",
+      "p": 0.668,
+      "pChannel": "HHZ",
+      "s": 2.559,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.DAW",
+      "p": 9.237,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.LRL",
+      "p": 5.598,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.MPM",
+      "p": 5.703,
+      "pChannel": "HHZ",
+      "s": 9.911,
+      "sChannel": "HNE"
+    },
+    {
+      "id": "CI.SLA",
+      "p": 5.538,
+      "pChannel": "HHZ",
+      "s": 11.303,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.SRT",
+      "p": 3.277,
+      "pChannel": "HHZ",
+      "s": 6.512,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.TOW2",
+      "p": 3.128,
+      "pChannel": "HHZ",
+      "s": 7.036,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WBM",
+      "p": 5.928,
+      "pChannel": "HHZ",
+      "s": 10.824,
+      "sChannel": "HNE"
+    },
+    {
+      "id": "CI.WBS",
+      "p": 9.462,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.WCS2",
+      "p": 5.658,
+      "pChannel": "HHZ"
+    },
+    {
+      "id": "CI.WMF",
+      "p": 7.83,
+      "pChannel": "HHZ",
+      "s": 14.822,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WOR",
+      "p": 9.926,
+      "pChannel": "HHZ",
+      "s": 17.101,
+      "sChannel": "HNN"
+    },
+    {
+      "id": "CI.WRC2",
+      "p": 3.547,
+      "pChannel": "HHZ",
+      "s": 6.871,
+      "sChannel": "HNE"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "name": "Ridgecrest 3D tomography",
+  "method": "3D tomography sampled along straight source-to-receiver ray; slowness integrated by trapezoidal rule; inverse-distance-weighted 8 nearest velocity nodes",
+  "source": "White et al. 2021 Ridgecrest 2019 tomography, DOI 10.17632/gv33tgvt5f.2",
+  "url": "https://data.mendeley.com/datasets/gv33tgvt5f/2",
+  "limitations": "Does not solve curved-ray Fermat problem, finite-fault rupture, topography, or full wavefield. Missing spatial coverage is null, never filled with a uniform velocity.",
+  "nodeCount": 5006725,
+  "maxNeighborKm": 5.0,
+  "events": {
+    "ci38457511": {
+      "CI.CCC": {
+        "p": 6.558502,
+        "s": 11.096084
+      },
+      "CI.CLC": {
+        "p": 1.72588,
+        "s": 2.907927
+      },
+      "CI.DAW": {
+        "p": 10.223185,
+        "s": 17.475074
+      },
+      "CI.JRC2": {
+        "p": 5.888143,
+        "s": 9.881232
+      },
+      "CI.LRL": {
+        "p": 6.108068,
+        "s": 10.21399
+      },
+      "CI.MPM": {
+        "p": 6.116287,
+        "s": 10.512083
+      },
+      "CI.SLA": {
+        "p": 5.794898,
+        "s": 9.762839
+      },
+      "CI.SRT": {
+        "p": 3.581622,
+        "s": 6.018789
+      },
+      "CI.TOW2": {
+        "p": 3.563631,
+        "s": 5.928353
+      },
+      "CI.WBM": {
+        "p": 6.62284,
+        "s": 10.84993
+      },
+      "CI.WBS": {
+        "p": 10.069214,
+        "s": 16.682727
+      },
+      "CI.WCS2": {
+        "p": 6.143886,
+        "s": 10.430945
+      },
+      "CI.WMF": {
+        "p": 8.324231,
+        "s": 14.095825
+      },
+      "CI.WOR": {
+        "p": 10.597563,
+        "s": 17.941212
+      },
+      "CI.WRC2": {
+        "p": 4.066466,
+        "s": 6.890043
+      },
+      "ridgecrest": {
+        "p": 3.618168,
+        "s": 6.072738
+      },
+      "mojave": {
+        "p": 17.559816,
+        "s": 29.906468
+      },
+      "lancaster": {
+        "p": 23.484972,
+        "s": 39.933749
+      },
+      "bakersfield": {
+        "p": 23.762867,
+        "s": 41.690227
+      },
+      "barstow": {
+        "p": 19.670178,
+        "s": 33.146593
+      },
+      "losangeles": {
+        "p": null,
+        "s": null
+      }
+    },
+    "ci38443183": {
+      "CI.CCC": {
+        "p": 4.728068,
+        "s": 7.939252
+      },
+      "CI.CLC": {
+        "p": 3.220506,
+        "s": 5.44748
+      },
+      "CI.DAW": {
+        "p": 11.440924,
+        "s": 19.46969
+      },
+      "CI.JRC2": {
+        "p": 7.795804,
+        "s": 13.087364
+      },
+      "CI.LRL": {
+        "p": 5.544868,
+        "s": 9.248893
+      },
+      "CI.MPM": {
+        "p": 7.079638,
+        "s": 12.067296
+      },
+      "CI.SLA": {
+        "p": 5.306662,
+        "s": 8.968633
+      },
+      "CI.SRT": {
+        "p": 4.639973,
+        "s": 7.834588
+      },
+      "CI.TOW2": {
+        "p": 5.480198,
+        "s": 9.111804
+      },
+      "CI.WBM": {
+        "p": 7.291948,
+        "s": 12.003595
+      },
+      "CI.WBS": {
+        "p": 10.795505,
+        "s": 18.008691
+      },
+      "CI.WCS2": {
+        "p": 7.935169,
+        "s": 13.450897
+      },
+      "CI.WMF": {
+        "p": 10.113488,
+        "s": 17.090377
+      },
+      "CI.WOR": {
+        "p": 11.741239,
+        "s": 19.863599
+      },
+      "CI.WRC2": {
+        "p": 5.710421,
+        "s": 9.69201
+      },
+      "ridgecrest": {
+        "p": 3.694304,
+        "s": 6.138278
+      },
+      "mojave": {
+        "p": 17.016814,
+        "s": 29.049987
+      },
+      "lancaster": {
+        "p": 22.683263,
+        "s": 38.422454
+      },
+      "bakersfield": {
+        "p": 24.391051,
+        "s": 42.831684
+      },
+      "barstow": {
+        "p": 17.638526,
+        "s": 29.510018
+      },
+      "losangeles": {
+        "p": null,
+        "s": null
+      }
+    }
+  }
+}
